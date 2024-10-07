@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Query,
+  Request,
   UseGuards,
 } from '@nestjs/common';
 import { ApiQuery, ApiTags } from '@nestjs/swagger';
@@ -27,8 +28,8 @@ export class ParticipantController {
   }
 
   @Post()
-  async create(@Body() data: CreateParticipantDto) {
-    return this.eventService.create(data);
+  async create(@Body() data: CreateParticipantDto, @Request() req) {
+    return this.eventService.create(data, req);
   }
 
   @Delete(':username')

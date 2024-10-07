@@ -12,7 +12,7 @@ import { AuthModule } from './api/auth/auth.module';
     ConfigModule.forRoot({ isGlobal: true }),
     DatabaseModule,
     EventModule,
-    AuthModule
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

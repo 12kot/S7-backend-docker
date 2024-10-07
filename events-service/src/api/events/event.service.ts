@@ -20,6 +20,14 @@ export class EventService {
     });
   }
 
+  async getById(id: number) {
+    return await this.eventRepository.findOne({
+      where: {
+        id,
+      },
+    });
+  }
+
   async create(data: CreateEventDto) {
     return await this.eventRepository.save({
       ...data,

@@ -27,6 +27,11 @@ export class EventController {
     return this.eventService.get(date, type);
   }
 
+  @Get(':id')
+  getById(@Param('id') id: number) {
+    return this.eventService.getById(id);
+  }
+
   @Post()
   async create(@Body() data: CreateEventDto) {
     return this.eventService.create(data);
