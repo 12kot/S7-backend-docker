@@ -31,7 +31,7 @@ async function bootstrap(): Promise<void> {
         type: 'http',
         in: 'Header',
       },
-      'access-token',
+      'Authorization',
     )
     .addBearerAuth(
       {

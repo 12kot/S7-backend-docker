@@ -6,7 +6,6 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as argon2 from 'argon2';
-import { User } from '../user/entities/user.entity';
 import { RegistrationDto } from './dto/registration.dto';
 
 @Injectable()
@@ -29,10 +28,10 @@ export class AuthService {
     throw new UnauthorizedException('Invalid credentials');
   }
 
-  async login(user: User) {
+  async login({ username }: RegistrationDto) {
     return {
       token: this.jwtService.sign({
-        username: user.username,
+        username: username,
       }),
     };
   }
