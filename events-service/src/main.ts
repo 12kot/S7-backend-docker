@@ -5,6 +5,7 @@ import { ValidationPipe } from '@nestjs/common';
 const cors = require('cors');
 
 async function bootstrap(): Promise<void> {
+  //1 в 1 как и auth-service
   const app = await NestFactory.create(AppModule);
 
   app.use(

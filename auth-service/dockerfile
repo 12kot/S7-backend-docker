@@ -1,13 +1,20 @@
-FROM node:18
+#версия ноды
+FROM node:18 
 
+#папка куда билдим
 WORKDIR /app/first
 
+#копируем всю дату из файла
 COPY package*.json ./
 
+#качаем все пакеты
 RUN npm install
 
+#копируем всё
 COPY . .
 
+#билдим
 RUN npm run build
 
+#запускаем
 CMD [ "npm", "run", "start" ]

@@ -6,6 +6,7 @@ import { Event } from './entities/event.entity';
 import { EventService } from './event.service';
 import { EventController } from './event.controller';
 
+//1 в 1 как и auth-service
 @Module({
   imports: [
     TypeOrmModule.forFeature([Event]),

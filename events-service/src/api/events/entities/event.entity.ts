@@ -1,5 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
+//1 в 1 как и auth-service
 @Entity()
 export class Event {
   @PrimaryGeneratedColumn()
@@ -13,6 +14,7 @@ export class Event {
 
   @Column({
     nullable: false,
+    //автоматически заносим текущую дату в таблицу при создании ивента
     default: () => 'CURRENT_TIMESTAMP()',
   })
   date: string;

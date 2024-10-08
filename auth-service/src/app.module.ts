@@ -7,16 +7,22 @@ import { HelmetMiddleware } from '@nest-middlewares/helmet';
 import { UserModule } from './api/user/user.module';
 import { AuthModule } from './api/auth/auth.module';
 
+//наш главный модуль, сюда импортируем все наши модули
 @Module({
   imports: [
+    //это просто надо, зачемоно идёт по умолчанию
     ConfigModule.forRoot({ isGlobal: true }),
+    //далее наши модули
     DatabaseModule,
     UserModule,
     AuthModule,
   ],
+  //автоматичски создано
   controllers: [AppController],
+  //автоматичски создано
   providers: [AppService],
 })
+//какая-то фигня. Снова связана с корсами. Тупо скопировал с какого-то проекта
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     HelmetMiddleware.configure({

@@ -1,42 +1,44 @@
 version: "3.8"
 
 services:
-  db:
-    image: postgres:13
-    environment:
+  db: #назввание сервиса
+    image: postgres:13 #версия имеджа
+    environment: #еввихи (тут в проекте env вообще не используется, что делать неправильно)
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: postgres
-    volumes:
+    volumes: #что нам надо запустить
       - postgres_data:/var/lib/postgresql/data
-      - ./db-init.sh:/docker-entrypoint-initdb.d/db-init.sh
+      - ./db-init.sh:/docker-entrypoint-initdb.d/db-init.sh #скрипт для создания бд
     networks:
-      - backend
+      - backend #в какой сети оно будет работаь 
     ports:
-      - "5432:5432"
+      - "5432:5432" #порты
 
-  redis:
-    image: redis:6
-    networks:
-      - backend
+  redis: #назввание сервиса (штука для кеширования)
+    image: redis:6 #версия
+    networks: #в какой сети оно будет работать
+      - backend 
 
-  auth-service:
-    build: ./auth-service
+  auth-service: #назввание сервиса
+    build: ./auth-service #папка билда
     ports:
-      - "5000:5000"
-    environment:
+      - "5000:5000" #порт на котором расположится
+    environment: #енвишки (нигде не используются)
       - DB_HOST=db
       - DB_PORT=5432
       - DB_USERNAME=postgres
       - DB_PASSWORD=postgres
       - DB_NAME=b_db_auth
-      - JWT_SECRET=HiHiHaHa
+      - JWT_SECRET=HiHiHaHa #!!!ИСПОЛЬЗУЕТСЯ ВЕЗДЕ. Для авторизации (секретный токен на основе которого генертся JWT-токены)
       - PORT=5000
-    command: bash -c "npm run migration:run && npm run start"
-    networks:
+    command: bash -c "npm run migration:run && npm run start" #скрипт, который запускает сначала миграции, а потом само приложение
+    networks: #в какой сети оно будет работать
       - backend
-    depends_on:
+    depends_on: #зависимости (выполнение произойдёт только после выполнения сервисов ниже)
       - db
+
+  #далее всё тоже самое, что и в сервисе выше 
 
   events-service:
     build: ./events-service
@@ -95,5 +97,5 @@ services:
 volumes:
   postgres_data:
 
-networks:
+networks: #список сетей
   backend:

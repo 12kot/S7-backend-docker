@@ -1,1 +1,2 @@
-export class Auth {}
+//отдельная таблица для ауфа нам не нужна
+export class Auth { }

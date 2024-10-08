@@ -1,3 +1,4 @@
+#1 в 1 как и auth-service
 FROM node:18
 
 WORKDIR /app/second

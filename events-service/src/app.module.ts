@@ -9,15 +9,23 @@ import { AuthModule } from './api/auth/auth.module';
 import { CacheModule } from '@nestjs/cache-manager';
 import * as redisStore from 'cache-manager-redis-store';
 
+//1 в 1 как и auth-service
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
+    //подключаем редис
     CacheModule.register({
+      //макс элементов может храниться
       max: 100,
+      //время жизни кеша
       ttl: 60,
+      //будет ли модуль доступен везде без необходимости его импортировать отдельно везде
       isGlobal: true,
+      //тип стора, который мы будем использваоть. В нашем случае - редис
       store: redisStore,
+      //как в docker-compose
       host: 'redis',
+      //стандартный порт для редиса
       port: 6379,
     }),
     DatabaseModule,

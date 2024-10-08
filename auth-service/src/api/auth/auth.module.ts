@@ -8,10 +8,13 @@ import { LocalStrategy } from './strategies/local.strategy';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtStrategy } from './strategies/jwt.strategy';
 
+//модуль авторизации
 @Module({
   imports: [
+    //что мы можем использовать в сервисе
     UserModule,
     PassportModule,
+    //ещё раз конфигурация авторизации (подробнее в userModule)
     JwtModule.registerAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
@@ -21,7 +24,9 @@ import { JwtStrategy } from './strategies/jwt.strategy';
       inject: [ConfigService],
     }),
   ],
+  //наши контролеры, описываются наши эндпоинты
   controllers: [AuthController],
+  //провайдеры, что мы можем использовать
   providers: [AuthService, LocalStrategy, JwtStrategy],
 })
 export class AuthModule {}
