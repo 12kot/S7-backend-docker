@@ -8,11 +8,13 @@ import {
   Put,
   Query,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ApiQuery, ApiTags } from '@nestjs/swagger';
 import { EventService } from './event.service';
 import { CreateEventDto } from './dto/create-event.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { CacheInterceptor, CacheKey } from '@nestjs/cache-manager';
 
 @ApiTags('event')
 @Controller('event')
@@ -21,6 +23,8 @@ export class EventController {
   constructor(private readonly eventService: EventService) {}
 
   @Get()
+  @UseInterceptors(CacheInterceptor)
+  @CacheKey('events')
   @ApiQuery({ name: 'date', required: false, type: String })
   @ApiQuery({ name: 'type', required: false, type: String })
   get(@Query('date') date?: string, @Query('type') type?: string) {

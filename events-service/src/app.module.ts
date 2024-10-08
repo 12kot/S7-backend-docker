@@ -6,10 +6,20 @@ import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { HelmetMiddleware } from '@nest-middlewares/helmet';
 import { EventModule } from './api/events/event.module';
 import { AuthModule } from './api/auth/auth.module';
+import { CacheModule } from '@nestjs/cache-manager';
+import * as redisStore from 'cache-manager-redis-store';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
+    CacheModule.register({
+      max: 100,
+      ttl: 60,
+      isGlobal: true,
+      store: redisStore,
+      host: 'redis',
+      port: 6379,
+    }),
     DatabaseModule,
     EventModule,
     AuthModule,
